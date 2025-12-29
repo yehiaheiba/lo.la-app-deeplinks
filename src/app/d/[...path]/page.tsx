@@ -43,15 +43,6 @@ export default function DeepLinkLandingPage({ params, searchParams }: Props) {
 
   return (
     <main className="container">
-      <div className="card" style={{ marginBottom: 16 }}>
-        <div className="muted">Deep link landing</div>
-        <div className="mono" style={{ marginTop: 8, wordBreak: "break-all" }}>
-          Web URL: {webUrl}
-          <br />
-          Path: /d/{path}
-        </div>
-      </div>
-
       <OpenInApp
         path={path}
         queryString={queryString}

@@ -9,10 +9,7 @@ export default function DeepLinkLoading() {
           height={160}
           style={{ display: "block", margin: "0 auto 12px auto" }}
         />
-        <div className="muted">Opening the app…</div>
       </div>
     </main>
   );
 }
-
-

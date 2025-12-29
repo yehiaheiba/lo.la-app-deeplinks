@@ -120,34 +120,18 @@ export function OpenInApp(props: Props) {
             height={160}
             style={{ display: "block", margin: "0 auto 12px auto" }}
           />
-          <h1 style={{ marginTop: 0 }}>Opening…</h1>
         </div>
       ) : (
-        <h1>Open in app</h1>
+        <h1></h1>
       )}
-      <p className="muted">
-        We’ll try to open the app automatically. If it isn’t installed, we’ll
-        send you to the store.
-      </p>
 
       <div className="row" style={{ marginTop: 14 }}>
         <button className="btn btnPrimary" onClick={open}>
           {attempted ? "Trying again" : "Open in app"}
         </button>
-        <a className="btn" href={`/d/${props.path}${props.queryString || ""}`}>
+        {/* <a className="btn" href={`/d/${props.path}${props.queryString || ""}`}>
           Continue on web
-        </a>
-      </div>
-
-      <div style={{ marginTop: 14 }}>
-        <div className="muted">Debug</div>
-        <div className="mono" style={{ marginTop: 6, wordBreak: "break-all" }}>
-          Scheme URL: {schemeUrl}
-          <br />
-          Android intent: {intentUrl}
-          <br />
-          Attempted: {attempted ? "yes" : "no"}
-        </div>
+        </a> */}
       </div>
     </div>
   );

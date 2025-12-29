@@ -16,7 +16,9 @@ function buildHomeSchemeUrl(appScheme: string) {
 
 function buildHomeAndroidIntentUrl(appScheme: string, androidPackage: string) {
   // intent://#Intent;scheme=lola;package=com.example.app;end
-  return `intent://#Intent;scheme=${encodeURIComponent(appScheme)};package=${encodeURIComponent(androidPackage)};end`;
+  return `intent://#Intent;scheme=${encodeURIComponent(
+    appScheme
+  )};package=${encodeURIComponent(androidPackage)};end`;
 }
 
 export function OpenHome(props: Props) {
@@ -25,7 +27,10 @@ export function OpenHome(props: Props) {
   const { schemeUrl, intentUrl } = useMemo(() => {
     return {
       schemeUrl: buildHomeSchemeUrl(props.appScheme),
-      intentUrl: buildHomeAndroidIntentUrl(props.appScheme, props.androidPackage),
+      intentUrl: buildHomeAndroidIntentUrl(
+        props.appScheme,
+        props.androidPackage
+      ),
     };
   }, [props.androidPackage, props.appScheme]);
 
@@ -42,7 +47,9 @@ export function OpenHome(props: Props) {
 
     window.setTimeout(() => {
       if (Date.now() - start >= timeoutMs - 50) {
-        window.location.href = isAndroid ? props.androidPlayStoreUrl : props.iosAppStoreUrl;
+        window.location.href = isAndroid
+          ? props.androidPlayStoreUrl
+          : props.iosAppStoreUrl;
       }
     }, timeoutMs);
   };
@@ -50,6 +57,14 @@ export function OpenHome(props: Props) {
   return (
     <div className="fullscreen center">
       <div style={{ textAlign: "center" }}>
+        <img
+          src="/@lola-logo.jpg"
+          alt="Lola"
+          width={220}
+          height={220}
+          style={{ display: "block", margin: "0 auto 22px auto" }}
+        />
+
         {attempted && (
           <img
             src="/loading.gif"
@@ -61,11 +76,9 @@ export function OpenHome(props: Props) {
         )}
 
         <button className="btn btnPrimary btnBrand" onClick={open}>
-          {attempted ? "Opening…" : "Open in app"}
+          {attempted ? "" : "Open in app"}
         </button>
       </div>
     </div>
   );
 }
-
-
