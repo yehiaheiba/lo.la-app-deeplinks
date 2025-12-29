@@ -1,19 +1,20 @@
 :root {
   color-scheme: light;
-  --bg: #0b0f19;
-  --card: #121a2a;
-  --text: #e7eefc;
-  --muted: #b8c6e6;
-  --accent: #6ea8ff;
-  --border: rgba(255, 255, 255, 0.12);
+  --bg: #fff7fb;
+  --card: #ffffff;
+  --text: #231a1f;
+  --muted: #6a5a63;
+  --accent: #ff4fa3;
+  --accent2: #ffb3d6;
+  --border: rgba(35, 26, 31, 0.12);
 }
 
 html,
 body {
   padding: 0;
   margin: 0;
-  background: radial-gradient(1200px 600px at 20% 10%, rgba(110, 168, 255, 0.22), transparent),
-    radial-gradient(900px 500px at 80% 20%, rgba(174, 110, 255, 0.18), transparent),
+  background: radial-gradient(900px 500px at 20% 0%, rgba(255, 79, 163, 0.10), transparent),
+    radial-gradient(900px 500px at 90% 10%, rgba(255, 179, 214, 0.18), transparent),
     var(--bg);
   color: var(--text);
   font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji",
@@ -33,10 +34,10 @@ a {
 
 .card {
   border: 1px solid var(--border);
-  background: color-mix(in srgb, var(--card) 82%, transparent);
-  border-radius: 16px;
+  background: var(--card);
+  border-radius: 20px;
   padding: 20px;
-  backdrop-filter: blur(10px);
+  box-shadow: 0 20px 60px rgba(35, 26, 31, 0.08);
 }
 
 .row {
@@ -50,18 +51,18 @@ a {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 10px 14px;
-  border-radius: 12px;
+  padding: 12px 18px;
+  border-radius: 999px;
   border: 1px solid var(--border);
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.75);
   color: var(--text);
   font-weight: 600;
   cursor: pointer;
 }
 
 .btnPrimary {
-  border-color: rgba(110, 168, 255, 0.45);
-  background: rgba(110, 168, 255, 0.22);
+  border-color: rgba(255, 79, 163, 0.55);
+  background: linear-gradient(180deg, rgba(255, 79, 163, 0.22), rgba(255, 179, 214, 0.20));
 }
 
 .muted {
@@ -73,4 +74,20 @@ a {
   font-size: 13px;
 }
 
+.fullscreen {
+  min-height: 100vh;
+}
+
+.center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 28px;
+}
+
+.btnBrand {
+  min-width: 220px;
+  letter-spacing: 0.2px;
+  box-shadow: 0 10px 30px rgba(255, 79, 163, 0.18);
+}
 

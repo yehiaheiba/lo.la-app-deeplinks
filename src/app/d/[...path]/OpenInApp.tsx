@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 type Props = {
   path: string;
@@ -61,6 +61,23 @@ export function OpenInApp(props: Props) {
     };
   }, [props.androidPackage, props.appScheme, props.path, props.queryString]);
 
+  const canAutoOpen = () => {
+    // Allow disabling auto-open via query param (handy for QA / support)
+    const sp = new URLSearchParams(window.location.search);
+    if (sp.get("noapp") === "1" || sp.get("noapp") === "true") return false;
+
+    // Avoid loops on refresh/back navigation: try only once per URL per browser session.
+    const key = `deeplink:autoopen:v1:${window.location.pathname}${window.location.search}`;
+    try {
+      if (sessionStorage.getItem(key) === "1") return false;
+      sessionStorage.setItem(key, "1");
+    } catch {
+      // If storage is blocked, proceed without the guard.
+    }
+
+    return true;
+  };
+
   const open = () => {
     setAttempted(true);
 
@@ -70,7 +87,7 @@ export function OpenInApp(props: Props) {
     const isAndroid = ua.includes("android");
 
     const start = Date.now();
-    const timeoutMs = 1400;
+    const timeoutMs = isAndroid ? 1200 : 1700;
 
     window.location.href = isAndroid ? intentUrl : schemeUrl;
 
@@ -85,17 +102,37 @@ export function OpenInApp(props: Props) {
     }, timeoutMs);
   };
 
+  useEffect(() => {
+    if (!canAutoOpen()) return;
+    const t = window.setTimeout(() => open(), 50);
+    return () => window.clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <div className="card">
-      <h1>Open in app</h1>
+      {attempted ? (
+        <div style={{ textAlign: "center" }}>
+          <img
+            src="/loading.gif"
+            alt="Loading"
+            width={160}
+            height={160}
+            style={{ display: "block", margin: "0 auto 12px auto" }}
+          />
+          <h1 style={{ marginTop: 0 }}>Opening…</h1>
+        </div>
+      ) : (
+        <h1>Open in app</h1>
+      )}
       <p className="muted">
-        This page can open the installed app directly. If the app isn’t
-        installed, we’ll send you to the store.
+        We’ll try to open the app automatically. If it isn’t installed, we’ll
+        send you to the store.
       </p>
 
       <div className="row" style={{ marginTop: 14 }}>
         <button className="btn btnPrimary" onClick={open}>
-          Open in app
+          {attempted ? "Trying again" : "Open in app"}
         </button>
         <a className="btn" href={`/d/${props.path}${props.queryString || ""}`}>
           Continue on web
