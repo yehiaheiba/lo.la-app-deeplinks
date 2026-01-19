@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Deep Links",
-  description: "Open content in the app from the web.",
+  title: "lo.la app",
+  description: "Experience everything beauty in one app.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import Image from "next/image";
 
 type Props = {
   path: string;
@@ -110,28 +111,37 @@ export function OpenInApp(props: Props) {
   }, []);
 
   return (
-    <div className="card">
-      {attempted ? (
-        <div style={{ textAlign: "center" }}>
-          <img
-            src="/loading.gif"
-            alt="Loading"
-            width={160}
-            height={160}
-            style={{ display: "block", margin: "0 auto 12px auto" }}
-          />
-        </div>
-      ) : (
-        <h1></h1>
-      )}
+    <div className="container">
+      <div className="middle-section">
+        <Image
+          src="/app-image.jpg"
+          alt="App Screenshot"
+          className="app-screenshot"
+          width={600}
+          height={1000}
+          priority
+        />
+      </div>
 
-      <div className="row" style={{ marginTop: 14 }}>
-        <button className="btn btnPrimary" onClick={open}>
-          {attempted ? "Trying again" : "Open in app"}
+      <div className="bottom-section">
+        <button className="btnBrand" onClick={open}>
+          {attempted && <div className="loading-spinner" />}
+          <span>{attempted ? "Opening..." : "Go to App"}</span>
+          {!attempted && (
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <polyline points="9 18 15 12 9 6" />
+            </svg>
+          )}
         </button>
-        {/* <a className="btn" href={`/d/${props.path}${props.queryString || ""}`}>
-          Continue on web
-        </a> */}
       </div>
     </div>
   );

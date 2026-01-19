@@ -21,10 +21,9 @@ function toQueryString(searchParams: Props["searchParams"]): string {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const path = joinPathSegments(params.path ?? []);
   return {
-    title: `Open ${path || "content"} in app`,
-    description: "Open this content in the app, or continue on the web.",
+    title: "lo.la app",
+    description: "Experience everything beauty in one app.",
   };
 }
 

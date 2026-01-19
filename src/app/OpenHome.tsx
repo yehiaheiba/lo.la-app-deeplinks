@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import Image from "next/image";
 
 type Props = {
   appScheme: string;
@@ -55,28 +56,23 @@ export function OpenHome(props: Props) {
   };
 
   return (
-    <div className="fullscreen center">
-      <div style={{ textAlign: "center" }}>
-        <img
-          src="/@lola-logo.jpg"
-          alt="Lola"
-          width={220}
-          height={220}
-          style={{ display: "block", margin: "0 auto 22px auto" }}
+    <div className="container">
+      <div className="middle-section">
+        <Image
+          src="/app-image.jpg"
+          alt="App Screenshot"
+          className="app-screenshot"
+          width={600}
+          height={1000}
+          priority
         />
+      </div>
 
-        {attempted && (
-          <img
-            src="/loading.gif"
-            alt="Loading"
-            width={160}
-            height={160}
-            style={{ display: "block", margin: "0 auto 12px auto" }}
-          />
-        )}
-
-        <button className="btn btnPrimary btnBrand" onClick={open}>
-          {attempted ? "" : "Open in app"}
+      <div className="bottom-section">
+        <button className="btnBrand" onClick={open}>
+         
+          <span>{attempted ? "Opening..." : "Go to App"}</span>
+          
         </button>
       </div>
     </div>
