@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo } from "react";
 import Image from "next/image";
 
 type Props = {
@@ -23,8 +23,6 @@ function buildHomeAndroidIntentUrl(appScheme: string, androidPackage: string) {
 }
 
 export function OpenHome(props: Props) {
-  const [attempted, setAttempted] = useState(false);
-
   const { schemeUrl, intentUrl } = useMemo(() => {
     return {
       schemeUrl: buildHomeSchemeUrl(props.appScheme),
@@ -35,9 +33,8 @@ export function OpenHome(props: Props) {
     };
   }, [props.androidPackage, props.appScheme]);
 
-  const open = () => {
-    setAttempted(true);
-
+  useEffect(() => {
+    // Auto-open the app as soon as the landing page loads.
     const ua = navigator.userAgent.toLowerCase();
     const isAndroid = ua.includes("android");
 
@@ -46,14 +43,15 @@ export function OpenHome(props: Props) {
 
     window.location.href = isAndroid ? intentUrl : schemeUrl;
 
-    window.setTimeout(() => {
+    const timeoutId = window.setTimeout(() => {
       if (Date.now() - start >= timeoutMs - 50) {
         window.location.href = isAndroid
           ? props.androidPlayStoreUrl
           : props.iosAppStoreUrl;
       }
     }, timeoutMs);
-  };
+    return () => window.clearTimeout(timeoutId);
+  }, [intentUrl, schemeUrl, props.androidPlayStoreUrl, props.iosAppStoreUrl]);
 
   return (
     <div className="container">
@@ -66,14 +64,6 @@ export function OpenHome(props: Props) {
           height={1000}
           priority
         />
-      </div>
-
-      <div className="bottom-section">
-        <button className="btnBrand" onClick={open}>
-         
-          <span>{attempted ? "Opening..." : "Go to App"}</span>
-          
-        </button>
       </div>
     </div>
   );
